@@ -340,7 +340,60 @@ function hoverPlay(songNum) {
   activeVideo.play().catch(() => {});
 }
 
+// Function para alamin kung mobile / touch device
+function isMobileDevice() {
+  return !window.matchMedia("(hover: hover)").matches;
+}
+
+function hoverPlay(songNum) {
+  // BAGO: Kung mobile phone, huwag patakbuhin ang hover video preview
+  if (isMobileDevice()) return;
+
+  if (isSongOpened) return;
+
+  if (songNum === 1) {
+    activeVideo = bgVideo1;
+  } else if (songNum === 2) {
+    activeVideo = bgVideo2;
+  } else if (songNum === 3) {
+    activeVideo = bgVideo3;
+  } else if (songNum === 4) {
+    activeVideo = bgVideo4;
+  }
+
+  activeVideo.style.display = "block";
+  activeVideo.play().catch(() => {});
+}
+
 function hoverStop(songNum) {
+  if (isSongOpened) return;
+
+  let targetVideo;
+  if (songNum === 1) {
+    targetVideo = bgVideo1;
+  } else if (songNum === 2) {
+    targetVideo = bgVideo2;
+  } else if (songNum === 3) {
+    targetVideo = bgVideo3;
+  } else {
+    targetVideo = bgVideo4;
+  }
+
+  targetVideo.pause();
+  targetVideo.currentTime = 0;
+  targetVideo.style.display = "none";
+  activeVideo = null;
+}
+
+// Helper function para malaman kung mobile (kung wala pa nito sa taas)
+function isMobileDevice() {
+  return !window.matchMedia("(hover: hover)").matches;
+}
+
+function hoverStop(songNum) {
+  // BAGO: Kung mobile phone, huwag patakbuhin ang hover stop
+  if (isMobileDevice()) return;
+
   if (isSongOpened) return;
 
   let targetVideo;
